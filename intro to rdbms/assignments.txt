@@ -1,0 +1,25 @@
+Q1)
+ Observe the structureas of a given EMPLOYEE table as below and suggest if this table can be further Normalized
+ EMPNO,ENAME,SAL,DEPTNO,DNAME,LOC
+ Explain what normal form this table is and how you can make this into next normal form
+
+Ans1).  This table is in Second Normal Form (2NF) because:
+
+All values are atomic (1NF satisfied).
+The primary key is EMPNO (single attribute), so there are no partial dependencies.
+
+Normalize into Third Normal Form (3NF)
+
+Separate the department information into another table.
+
+Table 1: EMPLOYEE
+EMPNO	ENAME	SAL	DEPTNO
+101	John	50000	10
+102	Alice	60000	20
+103	Bob	55000	10
+
+Table 2: DEPARTMENT
+DEPTNO	DNAME	LOC
+10	Sales	New York
+20	HR	Chicago
+
