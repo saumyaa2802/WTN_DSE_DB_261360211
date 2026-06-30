@@ -1,0 +1,580 @@
+Q1) Determine the Structure of DEPT Table and its Contents.
+Ans1)  DESC DEPT;
+      SELECT * FROM DEPT;
+
+
+
+ Q2) Determine the Structure of EMP Table and its Contents
+Ans)  DESC EMP;
+     SELECT * FROM EMP;
+
+
+Q3) Display the Ename and Deptno from Emp table whose Empno is 7788.
+Ans) SELECT ENAME, DEPTNO
+     FROM EMP
+     WHERE EMPNO = 7788;
+
+
+
+Q1) Display the Ename,Sal,Comm from Emp table who earn commission and sort the records  in descending order of Salary and Comm. Use column’s numeric position in the ORDER BY clause
+
+Ans)  SELECT ENAME, SAL, COMM
+      FROM EMP
+     WHERE COMM IS NOT NULL
+    ORDER BY 2 DESC, 3 DESC;
+
+
+
+Q2  The HR department needs a query to display all unique job codes from the EMP table.
+
+Ans)   SELECT DISTINCT JOB
+       FROM EMP;
+
+
+
+	
+Q3  The HR department wants more descriptive column headings for its report on employees. Name the column headings Emp #, Employee, Job, and Hire Date, respectively by giving Column Alias.
+
+Ana)  SELECT EMPNO AS "Emp #",
+       ENAME AS "Employee",
+       JOB AS "Job",
+       HIREDATE AS "Hire Date"
+       FROM EMP;
+	
+
+
+Q4	The HR department has requested a report of all employees and their job IDs. Display the last name concatenated with the job ID (separated by a comma and space) and name the column Employee and Title by giving Column Alias.
+
+Ans) SELECT ENAME || ', ' || JOB AS "Employee and Title"
+      FROM EMP;
+
+
+	
+Q5	To familiarize yourself with the data in the EMP table, create a query to display all the data from that table. Separate each column output by a comma. ENAME,JOB,HIREDATE,MGR.Name the column title THE_OUTPUT.
+
+Ans)   SELECT ENAME || ',' || JOB || ',' || HIREDATE || ',' || MGR AS THE_OUTPUT
+      FROM EMP;
+	
+
+
+Q6	Create a report to display the ename, job , and Hiredate  for the employees name is SCOTT or TURNER. Order the query in ascending order by hiredate.
+
+Ans)   SELECT ENAME, JOB, HIREDATE
+	FROM EMP
+	WHERE ENAME IN ('SCOTT','TURNER')
+	ORDER BY HIREDATE ASC;
+
+
+
+Q7  Display the ename and department number of all employees in departments 20 or 30 in ascending alphabetical order by ename.
+
+Ans)  SELECT ENAME, DEPTNO
+	FROM EMP
+	WHERE DEPTNO IN (20,30)
+	ORDER BY ENAME;
+
+
+
+Q8  Modify the previous query  to display the last name and salary of employees who earn between 2000 and 3000 and are in department 20 or 30. Label the columns Employee and Monthly Salary, respectively giving Column Alias.
+
+Ans) SELECT ENAME AS Employee,
+       SAL AS "Monthly Salary"
+	FROM EMP
+	WHERE SAL BETWEEN 2000 AND 3000
+	AND DEPTNO IN (20,30);
+
+
+
+Q9	The HR department needs a report that displays the last name and hire date for all employees who were hired in 1981.
+
+Ans)  SELECT ENAME, HIREDATE
+	FROM EMP
+	WHERE HIREDATE BETWEEN TO_DATE('01-JAN-1981','DD-MON-YYYY')
+	AND TO_DATE('31-DEC-1981','DD-MON-YYYY');
+
+	
+Q10	Display the Ename, Sal of employees who earn more than an amount the user specifies after a Prompt.
+
+Ans) SELECT ENAME, SAL
+	FROM EMP
+	WHERE SAL > &AMOUNT;
+
+
+	
+Q11	Create a report to display the last name and job title of all employees who do not have a manager.
+
+Ans) SELECT ENAME, JOB
+	FROM EMP
+	WHERE MGR IS NULL;
+
+
+	
+Q12	 Create a query that prompts the user for Manager ID  and generate EMPNO,ENAME, SAL,DEPTNO. The user should have the ability to sort the records on a selected Column.
+
+Ans)  SELECT EMPNO, ENAME, SAL, DEPTNO
+      FROM EMP
+      WHERE MGR = &MANAGER_ID
+     ORDER BY &COLUMN_NAME;
+	
+
+
+Q13	The HR department wants to run reports based on a manager. Create a query that prompts the user for a MGR and generates the empno, ename, salary, and department for that manager’s employees. The HR department wants the ability to sort the report on a selected column
+
+Ans) SELECT EMPNO, ENAME, SAL, DEPTNO
+     FROM EMP
+     WHERE MGR = &MGR
+     ORDER BY &COLUMN_NAME;
+
+	
+Q14	Display all employee last names in which the third letter of the name is A
+
+Ans) SELECT ENAME
+      FROM EMP
+      WHERE ENAME LIKE '__A%';
+
+	
+Q15	 Display the last name of all employees who have both an A and an S in their  ename
+
+Ans)   SELECT ENAME
+       FROM EMP
+      WHERE ENAME LIKE '%A%'
+      AND ENAME LIKE '%S%';
+
+
+	
+Q16	Display the Ename, Job, Sal for all employees whose jobs are CLERK and whose salary is in 800 or 950 or 1300.
+
+Ans)  SELECT ENAME, JOB, SAL
+      FROM EMP
+      WHERE JOB='CLERK'
+      AND SAL IN (800,950,1300);
+
+
+
+Q1 Write a query to display the current date. Label the column Date.
+
+Ans) SELECT SYSDATE AS "Date"
+FROM DUAL;
+	
+
+
+Q2	The HR department needs a report to display the employee number, last name, salary, and salary increased by 15.5% (expressed as a whole number) for each employee. Label the column New Salary.
+
+Ans)  SELECT EMPNO,
+       ENAME,
+       SAL,
+       ROUND(SAL * 1.155) AS "New Salary"
+       FROM EMP;
+
+
+
+Q3	Modify the previous query to add a column alias that subtracts the old salary from the new salary. Label the column Increase
+
+Ans)   SELECT EMPNO,
+       ENAME,
+       SAL,
+       ROUND(SAL * 1.155) AS "New Salary",
+       ROUND((SAL * 1.155) - SAL) AS "Increase"
+       FROM EMP;
+	
+
+
+Q4	Write a query that displays the ename (with the first letter uppercase and all other letters lowercase) and the length of the  ename for all employees whose name starts with the letters J, A, or M. Give each column an appropriate label. Sort the results by the employees’ enames.
+
+Ans)  SELECT INITCAP(LOWER(ENAME)) AS "Employee",
+       LENGTH(ENAME) AS "Length"
+       FROM EMP
+      WHERE SUBSTR(ENAME,1,1) IN ('J','A','M')
+      ORDER BY ENAME;
+
+
+	
+Q5	Rewrite the query so that the user is prompted to enter a letter that starts the last name. For example, if the user enters H when prompted for a letter, then the output should show all employees whose last name starts with the letter H.
+
+Ans)  SELECT INITCAP(LOWER(ENAME)) AS Employee,
+       LENGTH(ENAME) AS Length
+      FROM EMP
+     WHERE ENAME LIKE UPPER('&LETTER') || '%'
+      ORDER BY ENAME;
+
+
+
+Q6	The HR department wants to find the length of employment for each employee. For each employee, display the ename and calculate the number of months between today and the date on which the employee was hired. Label the column MONTHS_WORKED. Order your results by the number of months employed. Round the number of months up to the closest whole number.
+
+Ans)    SELECT ENAME,
+       CEIL(MONTHS_BETWEEN(SYSDATE,HIREDATE)) AS MONTHS_WORKED
+        FROM EMP
+        ORDER BY MONTHS_WORKED;
+
+
+
+Q7	Create a report that produces the following for each employee:   earns  monthly but wants <3 times salary>. Label the column Dream Salaries.
+
+Ans)  SELECT ENAME || ' earns ' || SAL ||
+       ' monthly but wants ' || (SAL*3) AS "Dream Salaries"
+       FROM EMP;
+	
+
+
+Q8	Create a query to display the last name and salary for all employees. Format the salary to be 15 characters long, left-padded with the $ symbol. Label the column SALARY.
+
+Ans)  SELECT ENAME,
+       LPAD(SAL,15,'$') AS SALARY
+      FROM EMP;
+	
+
+
+Q9	Display each employee’s last name, hire date, and salary review date, which is the first Monday after six months of service. Label the column REVIEW. Format the dates to appear in the format similar to “Monday, the Thirty-First of July, 2000.”
+
+Ans) SELECT ENAME,
+       HIREDATE,
+       TO_CHAR(
+           NEXT_DAY(ADD_MONTHS(HIREDATE,6),'MONDAY'),
+           'Day, "the" DDSP "of" Month, YYYY'
+       ) AS REVIEW
+       FROM EMP;
+
+	
+
+Q10	Display the last name, hire date, and day of the week on which the employee started. Label the column DAY. Order the results by the day of the week, starting with Monday.
+
+Ans)   SELECT ENAME,
+       HIREDATE,
+       TO_CHAR(HIREDATE,'DAY') AS DAY
+      FROM EMP
+      ORDER BY TO_CHAR(HIREDATE,'D');
+
+
+	
+Q11	Create a query that displays the employees’ last names and commission amounts. If an employee does not earn commission, show “No Commission.” Label the column COMM.
+
+Ans)  SELECT ENAME,
+       NVL(TO_CHAR(COMM),'No Commission') AS COMM
+      FROM EMP;
+	
+
+
+Q12	Create a query that displays the first eight characters of the employees’ last names and indicates the amounts of their salaries with asterisks. Each asterisk signifies a thousand dollars. Sort the data in descending order of salary. Label the column EMPLOYEES_AND_THEIR_SALARIES.
+
+Ans)  SELECT SUBSTR(ENAME,1,8) ||
+       ' ' ||
+       RPAD('*',TRUNC(SAL/1000),'*')
+       AS EMPLOYEES_AND_THEIR_SALARIES
+      FROM EMP
+       ORDER BY SAL DESC;
+
+
+	
+Q13	Using the DECODE function, write a query that displays the grade of all employees based on the value of the column JOB_ID, using the following data: PRESIDENT-A,MANAGER-B,SALESMAN-C,CLERK-D
+
+Ans)  SELECT ENAME,
+       DECODE(JOB,
+              'PRESIDENT','A',
+              'MANAGER','B',
+              'SALESMAN','C',
+              'CLERK','D',
+              'OTHER') AS GRADE
+       FROM EMP;
+
+
+Q14	Rewrite the statement in the preceding exercise using the CASE syntax
+
+Ans)  SELECT ENAME,
+       CASE JOB
+            WHEN 'PRESIDENT' THEN 'A'
+            WHEN 'MANAGER' THEN 'B'
+            WHEN 'SALESMAN' THEN 'C'
+            WHEN 'CLERK' THEN 'D'
+            ELSE 'OTHER'
+           END AS GRADE
+           FROM EMP;
+
+
+Q1    Find the highest, lowest, sum, and average salary of all employees. Label the columns
+Group Functions	
+
+Ans)  SELECT MAX(SAL) AS Maximum,
+       MIN(SAL) AS Minimum,
+       SUM(SAL) AS Sum,
+       ROUND(AVG(SAL)) AS Average
+      FROM EMP;
+
+
+
+Q2	Maximum, Minimum, Sum, and Average, respectively. Round your results to the nearest whole number.
+Group Functions	
+
+Ans) SELECT JOB,
+       MAX(SAL) AS Maximum,
+       MIN(SAL) AS Minimum,
+       SUM(SAL) AS Sum,
+       ROUND(AVG(SAL)) AS Average
+        FROM EMP
+       GROUP BY JOB;
+
+
+Q3)	Modify the above query to display the minimum, maximum, sum, and average salary for each job type.
+Group by Clause	
+
+Ans) SELECT JOB,
+       MAX(SAL) AS Maximum,
+       MIN(SAL) AS Minimum,
+       SUM(SAL) AS Sum,
+       ROUND(AVG(SAL)) AS Average
+        FROM EMP
+       GROUP BY JOB;
+
+
+
+Q4	 Write a query to display the number of people with the same job
+Group Functions	
+
+Ans)  SELECT JOB,
+       COUNT(*) AS TOTAL_EMPLOYEES
+       FROM EMP
+       GROUP BY JOB;
+
+
+
+Q5	Determine the number of managers without listing them. Label the column Number of Managers
+Group by Clause	
+
+Ans)  SELECT COUNT(DISTINCT MGR) AS "Number of Managers"
+      FROM EMP
+        WHERE MGR IS NOT NULL;
+
+
+
+Q6	 Find the difference between the highest and lowest salaries. Label the column DIFFERENCE.
+Group Functions	
+
+Ans) SELECT MAX(SAL)-MIN(SAL) AS DIFFERENCE
+     FROM EMP;
+
+
+
+Q7	Create a report to display the manager number and the salary of the lowest-paid employee for that manager. Exclude anyone whose manager is not known. Exclude any groups where the minimum salary is $2000 or less. Sort the output in descending order of salary.
+
+Ans) SELECT MGR,
+       MIN(SAL) AS LOWEST_SALARY
+      FROM EMP
+        WHERE MGR IS NOT NULL
+      GROUP BY MGR
+      HAVING MIN(SAL)>2000
+     ORDER BY LOWEST_SALARY DESC;
+
+	
+Q8	Create a query to display the total number of employees and, of that total, the number of employees hired in 1980, 1981, and 1982. Create appropriate column headings.
+
+Ans)  SELECT COUNT(*) AS TOTAL_EMPLOYEES,
+       SUM(CASE WHEN EXTRACT(YEAR FROM HIREDATE)=1980 THEN 1 ELSE 0 END) AS "1980",
+       SUM(CASE WHEN EXTRACT(YEAR FROM HIREDATE)=1981 THEN 1 ELSE 0 END) AS "1981",
+       SUM(CASE WHEN EXTRACT(YEAR FROM HIREDATE)=1982 THEN 1 ELSE 0 END) AS "1982"
+      FROM EMP;
+
+
+
+Q1   Create a matrix query to display the job, the salary for that job based on department number, and the total salary for that job, for departments 10, 20, and 30, giving each column an appropriate heading.
+Sing Row, Group Functions and Group by Clause	
+
+Ans)  SELECT JOB,
+       SUM(CASE WHEN DEPTNO=10 THEN SAL ELSE 0 END) AS DEPT10,
+       SUM(CASE WHEN DEPTNO=20 THEN SAL ELSE 0 END) AS DEPT20,
+       SUM(CASE WHEN DEPTNO=30 THEN SAL ELSE 0 END) AS DEPT30,
+       SUM(SAL) AS TOTAL
+      FROM EMP
+      GROUP BY JOB;
+
+
+
+Q2	Using set operator display the DEPTNO,SUM(SAL) for each dept,  JOB,SUM(SAL) for each Job and Total Salary.
+Set Operators	
+
+Ans)  SELECT TO_CHAR(DEPTNO) AS ITEM, SUM(SAL) AS TOTAL_SALARY
+        FROM EMP
+       GROUP BY DEPTNO
+        UNION
+        SELECT JOB, SUM(SAL)
+       FROM EMP
+       GROUP BY JOB
+       UNION
+     SELECT 'TOTAL', SUM(SAL)
+      FROM EMP;
+
+
+Q3	Using Set Operator display the JOB and Deptno  in employees working in deptno 20,10,30 in that order.
+
+Ans)  SELECT JOB, DEPTNO
+	FROM EMP
+	WHERE DEPTNO=20
+	UNION ALL
+	SELECT JOB, DEPTNO
+	FROM EMP
+	WHERE DEPTNO=10
+	UNION ALL
+	SELECT JOB, DEPTNO
+	FROM EMP
+	WHERE DEPTNO=30;
+
+Q1   Write a query for the HR department to produce the addresses of all the departments. Use the EMP and DEPT tables. Show the EMPNO, ENAME,SAL, DNAME and LOC in the output. Use a NATURAL JOIN to produce the results.
+Natural Join
+
+Ans)  SELECT EMPNO, ENAME, SAL, DNAME, LOC
+	FROM EMP
+	NATURAL JOIN DEPT;
+
+
+	
+Q2	The HR department needs a report of all employees. Write a query to display the JOB,MGR,SAL,COMM,DNAME of employees whose JOB is SALESMAN.
+Equi Join
+
+Ans)  SELECT JOB, MGR, SAL, COMM, DNAME
+	FROM EMP E
+	JOIN DEPT D
+	ON E.DEPTNO=D.DEPTNO
+	WHERE JOB='SALESMAN';
+
+
+
+	
+Q3	The HR department needs a report of employees in LOC  DALLAS. Display the ENAME, job, DEPTNO, and DNAME for all employees who work in DALLAS.
+Equi Join
+
+Ans)    SELECT ENAME, JOB, EMP.DEPTNO, DNAME
+	FROM EMP
+	JOIN DEPT
+	ON EMP.DEPTNO=DEPT.DEPTNO
+	WHERE LOC='DALLAS';
+	
+
+
+Q4	Create a report to display employees’ ename and employee number along with their manager’s name and manager number. Label the columns Employee, Emp#, Manager, and Mgr#, respectively.
+Self Join
+
+Ans)  	SELECT E.ENAME AS Employee,
+       E.EMPNO AS "Emp#",
+       M.ENAME AS Manager,
+       M.EMPNO AS "Mgr#"
+	FROM EMP E
+	JOIN EMP M
+	ON E.MGR=M.EMPNO;
+
+
+Q5	Modify the previous Query to display all employees including King, who has no manager. Order the results by the employee number.
+Outer Join	
+
+
+Ans)  SELECT E.ENAME AS Employee,
+       E.EMPNO AS "Emp#",
+       M.ENAME AS Manager,
+       M.EMPNO AS "Mgr#"
+	FROM EMP E
+	LEFT OUTER JOIN EMP M
+	ON E.MGR=M.EMPNO
+	ORDER BY E.EMPNO;
+
+
+Q6	The HR department needs a report on job grades and salaries. To familiarize yourself with the SALGRADE table, first show the structure of the SALGRADE table. Then create a query that displays the name, job, department name, salary, and grade for all employees.
+Non-Equi Join	
+
+Ans)  DESC SALGRADE;
+
+	SELECT ENAME,
+       JOB,
+       DNAME,
+       SAL,
+       GRADE
+	FROM EMP
+	JOIN DEPT
+	ON EMP.DEPTNO=DEPT.DEPTNO
+	JOIN SALGRADE
+	ON SAL BETWEEN LOSAL AND HISAL;
+
+
+
+Q7	Display the ENAME,DNAME of all the employees. Also display those department name which do not have any employees working.
+Outer Join
+
+Ans) 	SELECT ENAME,
+       DNAME
+	FROM EMP
+	RIGHT OUTER JOIN DEPT
+	ON EMP.DEPTNO=DEPT.DEPTNO;
+
+
+
+Q8	The HR department needs to find the names and hire dates for all employees who were hired before their managers, along with their managers’ names and hire dates.
+Self Join with Outer Join
+
+Ans) 	SELECT E.ENAME,
+       E.HIREDATE,
+       M.ENAME AS MANAGER,
+       M.HIREDATE AS MANAGER_HIREDATE
+	FROM EMP E
+	JOIN EMP M
+	ON E.MGR=M.EMPNO
+	WHERE E.HIREDATE < M.HIREDATE;
+
+
+
+Q9	 Display the EMPNO,ENAME,DNAME,LOC  of those employees who are working as CLERK. Use the USING clause.
+USING Clause	
+
+Ans) SELECT EMPNO,
+       ENAME,
+       DNAME,
+       LOC
+	FROM EMP
+	JOIN DEPT
+	USING (DEPTNO)
+	WHERE JOB='CLERK';
+
+
+Q10	 Display the ENAME,SAL,MGR,DNAME of employees whose salary is more than 2000. Use the ON clause.
+On Clause	
+
+Ans) SELECT ENAME,
+       SAL,
+       MGR,
+       DNAME
+	FROM EMP
+	JOIN DEPT
+	ON EMP.DEPTNO=DEPT.DEPTNO
+	WHERE SAL>2000;
+
+
+
+Q11	Display the EMPNO,ENAME,JOB,DEPTNO,DNAME,LOC of employees. Use LEFT OUTER JOIN.
+LEFT OUTER JOIN	
+
+Ans)   SELECT EMPNO,
+       ENAME,
+       JOB,
+       EMP.DEPTNO,
+       DNAME,
+       LOC
+	FROM EMP
+	LEFT OUTER JOIN DEPT
+	ON EMP.DEPTNO=DEPT.DEPTNO;
+
+
+
+Q12	Display the ENAME,DNAME of employees. Use RIGHT OUTER JOIN.
+RIGHT OUTER JOIN
+
+Ans)   SELECT ENAME,
+       DNAME
+      FROM EMP
+      RIGHT OUTER JOIN DEPT
+        ON EMP.DEPTNO=DEPT.DEPTNO;
+
+
+	
+Q13	 Display the EMPNO,DNAME,LOC of employees. Use FULL OUTER JOIN.
+
+Ans)  SELECT EMPNO,
+       DNAME,
+       LOC
+      FROM EMP
+      FULL OUTER JOIN DEPT
+       ON EMP.DEPTNO=DEPT.DEPTNO;
